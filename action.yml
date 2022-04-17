@@ -1,6 +1,6 @@
-name: 'Snowflake Query Action'
-author: 'anecdotes.ai'
-description: 'This action lets running a list of SQL queries on your Snowflake DB.'
+name: 'Snowflake Auto Deploy'
+author: 'Vincent Yan vincent.yan@blend360.com'
+description: 'Run the .sql file on your Snowflake DB. Modified from https://github.com/anecdotes-ai/snowflake-query (Apache License 2.0)'
 
 branding:
   icon: 'database'
@@ -22,8 +22,8 @@ inputs:
   snowflake_role:
     description: 'Set user role'
     required: false
-  queries:
-    description: 'List of SQL queries, seperated by ;'
+  query_file:
+    description: '.sql file contains SQL queries'
     required: true
   sync:
     description: 'Whether to run the queries sync (default is async)'
@@ -32,7 +32,15 @@ inputs:
 outputs:
   queries_results:
     description: 'Json encoded as base64, containing all queries results'
-    
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - ${{ inputs.snowflake_username }}
+    - ${{ inputs.snowflake_password }}
+    - ${{ inputs.snowflake_account }}
+    - ${{ inputs.snowflake_warehouse }}
+    - ${{ inputs.snowflake_role }}
+    - ${{ inputs.query_file }}
+    - ${{ inputs.sync }}
