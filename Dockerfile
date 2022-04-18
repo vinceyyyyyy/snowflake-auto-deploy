@@ -17,4 +17,4 @@ RUN pip install --user snowflake-connector-python==2.7.6 python-dotenv
 COPY . /user/src/app
 
 # command to run in container start
-CMD ["python", "main.py"]
+ENTRYPOINT [ "entrypoint.sh" ]
