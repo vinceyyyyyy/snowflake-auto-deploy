@@ -6,13 +6,13 @@ ENV INPUT_SNOWFLAKE_USERNAME=
 ENV INPUT_SNOWFLAKE_PASSWORD=
 ENV INPUT_SNOWFLAKE_WAREHOUSE=
 ENV INPUT_QUERY_FILE=
-ENV APP_DIR=/app
-
-WORKDIR ${APP_DIR}
 
 # setup python environ
-COPY . ${APP_DIR}
+RUN apt update && apt upgrade -y
+RUN apt install -y libssl-dev libffi-dev build-essential
 RUN pip install --user pdm && pdm install
 
+COPY . .
+
 # command to run in container start
-CMD pdm run python ${APP_DIR}/main.py
+CMD ["$HOME/.local/bin/pdm", "run", "python", "${APP_DIR}/main.py"]
