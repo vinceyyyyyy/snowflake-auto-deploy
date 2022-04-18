@@ -7,12 +7,14 @@ ENV INPUT_SNOWFLAKE_PASSWORD=
 ENV INPUT_SNOWFLAKE_WAREHOUSE=
 ENV INPUT_QUERY_FILE=
 
+WORKDIR /user/src/app
+
 # setup python environ
 RUN apt update && apt upgrade -y
 RUN apt install -y libssl-dev libffi-dev build-essential
-RUN pip install --user pdm && pdm install
+RUN pip install --user snowflake-connector-python==2.7.6 python-dotenv
 
-COPY . .
+COPY . /user/src/app
 
 # command to run in container start
-CMD ["$HOME/.local/bin/pdm", "run", "python", "${APP_DIR}/main.py"]
+CMD ["python", "main.py"]
