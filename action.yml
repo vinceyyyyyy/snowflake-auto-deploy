@@ -36,11 +36,4 @@ outputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.snowflake_username }}
-    - ${{ inputs.snowflake_password }}
-    - ${{ inputs.snowflake_account }}
-    - ${{ inputs.snowflake_warehouse }}
-    - ${{ inputs.snowflake_role }}
-    - ${{ inputs.query_file }}
-    - ${{ inputs.sync }}
+
