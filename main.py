@@ -11,16 +11,20 @@ def main():
     load_dotenv()  # only on local run
     print(os.environ)
 
-    query_file_name = os.environ["INPUT_QUERY_FILE"]
+    query_file_names = os.environ["INPUT_QUERY_FILE"]
     warehouse = os.environ["INPUT_SNOWFLAKE_WAREHOUSE"]
     snowflake_account = os.environ["INPUT_SNOWFLAKE_ACCOUNT"]
     snowflake_username = os.environ["INPUT_SNOWFLAKE_USERNAME"]
     snowflake_password = os.environ["INPUT_SNOWFLAKE_PASSWORD"]
     snowflake_role = os.environ.get("INPUT_SNOWFLAKE_ROLE", "")
 
-    with open(query_file_name, "r") as f:
-        sql = "".join([line.strip() for line in f.readlines()])
-    queries = [n for n in sql.split(";") if n]
+    sql_files = query_file_names.split(",")
+
+    queries = []
+    for sql_file in sql_files:
+        with open(sql_file, "r") as f:
+            sql = "".join([line.strip() for line in f.readlines()])
+        queries += [n for n in sql.split(";") if n]
 
     with SnowflakeConnector(snowflake_account, snowflake_username, snowflake_password) as con:
         if snowflake_role:
