@@ -19,7 +19,7 @@ def main():
     snowflake_role = os.environ.get("INPUT_SNOWFLAKE_ROLE", "")
 
     with open(query_file_name, "r") as f:
-        sql = "".join(f.readlines())
+        sql = "".join([line.strip() for line in f.readlines()])
     queries = [n for n in sql.split(";") if n]
 
     with SnowflakeConnector(snowflake_account, snowflake_username, snowflake_password) as con:
@@ -29,15 +29,12 @@ def main():
         con.set_db_warehouse(warehouse)
 
         # default, run all queries async
-        json_results = {}
         for query in queries:
-            query_result = con.query(query)
-            print("### Running query ###")
-            print(f"[!] Query id - {query_result.query_id}")
+            result = con.query(query)
             print(f"[!] Running query ### - {query}")
-            json_results[query_result.query_id] = query_result.fetch_results_sync()
+            print(f"[!] Query Resule ### - {result}")
 
-    utils.set_github_action_output("queries_results", json.dumps(json_results))
+    # utils.set_github_action_output("queries_results", json.dumps(json_results))
 
 
 if __name__ == "__main__":
