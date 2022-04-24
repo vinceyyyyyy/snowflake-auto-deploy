@@ -9,8 +9,10 @@ ENV INPUT_QUERY_FILE=
 
 WORKDIR /user/src/app
 
+ENV PATH "$PATH:/root/.local/bin"
+
 # setup python environ
-RUN apt update && apt upgrade -y
+RUN apt update -y
 RUN apt install -y libssl-dev libffi-dev build-essential
 RUN pip install --user snowflake-connector-python==2.7.6 python-dotenv
 
