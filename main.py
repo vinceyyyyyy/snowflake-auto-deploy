@@ -22,6 +22,7 @@ def main():
 
     with open(query_file_name, "r") as f:
         sql = "".join(f.readlines())
+    queries = [n for n in sql.split(";") if n]
 
     with SnowflakeConnector(snowflake_account, snowflake_username, snowflake_password) as con:
         if snowflake_role:
@@ -32,7 +33,7 @@ def main():
         # default, run all queries async
         if not sync:
             query_results = []
-            for query in sql.split(";"):
+            for query in queries:
                 query_result = con.query(query)
                 query_results.append(query_result)
                 print("### Running query ###")
@@ -42,7 +43,7 @@ def main():
         # o/w, run them sync
         else:
             json_results = {}
-            for query in sql.split(";"):
+            for query in queries:
                 query_result = con.query(query)
                 print("### Running query ###")
                 print(f"[!] Query id - {query_result.query_id}")
