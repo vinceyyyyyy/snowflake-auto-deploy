@@ -1,10 +1,8 @@
 import os
-import json
 
 from dotenv import load_dotenv
 
 from snowflake_connector import SnowflakeConnector
-import utils
 
 
 def main():
