@@ -22,12 +22,9 @@ inputs:
   snowflake_role:
     description: 'Set user role'
     required: false
-  query_file:
+  query_files:
     description: '.sql file contains SQL queries'
     required: true
-  sync:
-    description: 'Whether to run the queries sync (default is async)'
-    required: false
 
 outputs:
   queries_results:

@@ -9,7 +9,7 @@ def main():
     load_dotenv()  # only on local run
     print(os.environ)
 
-    query_file_names = os.environ["INPUT_QUERY_FILE"]
+    query_file_names = os.environ["INPUT_QUERY_FILES"]
     warehouse = os.environ["INPUT_SNOWFLAKE_WAREHOUSE"]
     snowflake_account = os.environ["INPUT_SNOWFLAKE_ACCOUNT"]
     snowflake_username = os.environ["INPUT_SNOWFLAKE_USERNAME"]
