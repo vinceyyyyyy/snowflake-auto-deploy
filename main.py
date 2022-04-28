@@ -8,7 +8,7 @@ import utils
 
 def main():
     load_dotenv()  # only on local run
-    print(os.environ)
+    # print(os.environ)
 
     query_file_names = os.environ["INPUT_QUERY_FILES"]
     warehouse = os.environ["INPUT_SNOWFLAKE_WAREHOUSE"]
