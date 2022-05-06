@@ -32,4 +32,4 @@ outputs:
 
 runs:
   using: 'docker'
-  image: 'vinceyan/snowflake-python-3.10:latest'
+  image: 'docker://vinceyan/snowflake-python-3.10:latest'
