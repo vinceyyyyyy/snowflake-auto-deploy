@@ -22,7 +22,7 @@ def main():
     queries = []
     for sql_file in sql_files:
         with open(sql_file, "r") as f:
-            sql = "".join([line.strip() for line in f.readlines()])
+            sql = " ".join([line.strip() for line in f.readlines()])
         queries += [n for n in sql.split(";") if n]
 
     with SnowflakeConnector(snowflake_account, snowflake_username, snowflake_password) as con:
