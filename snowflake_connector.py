@@ -1,3 +1,4 @@
+from io import StringIO
 import snowflake.connector
 
 
@@ -19,11 +20,14 @@ class SnowflakeConnector:
         self.con.close()
 
     def set_db_warehouse(self, warehouse: str):
-        return self.query(f"USE WAREHOUSE {warehouse}")
+        return self._query(f"USE WAREHOUSE {warehouse}")
 
     def set_user_role(self, role: str):
-        return self.query(f"USE ROLE {role}")
+        return self._query(f"USE ROLE {role}")
 
-    def query(self, query_str: str):
+    def _query(self, query_str: str):
         self.cur.execute(query_str)
         return self.cur.fetchone()
+
+    def query_sql_file(self, stream: StringIO):
+        return self.con.execute_stream(stream, remove_comments=True)

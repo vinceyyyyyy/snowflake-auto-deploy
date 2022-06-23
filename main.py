@@ -3,7 +3,6 @@ import os
 from dotenv import load_dotenv
 
 from snowflake_connector import SnowflakeConnector
-import utils
 
 
 def main():
@@ -19,12 +18,6 @@ def main():
 
     sql_files = query_file_names.split(",")
 
-    queries = []
-    for sql_file in sql_files:
-        with open(sql_file, "r") as f:
-            sql = "\n".join([line.strip() for line in f.readlines()])
-        queries += [n for n in sql.split(";") if n]
-
     with SnowflakeConnector(snowflake_account, snowflake_username, snowflake_password) as con:
         if snowflake_role:
             con.set_user_role(snowflake_role)
@@ -32,10 +25,12 @@ def main():
         con.set_db_warehouse(warehouse)
 
         # default, run all queries async
-        for query in queries:
-            result = con.query(query)
-            print(f"[!] Running query ### - {query}")
-            print(f"[!] Query Resule ### - {result}")
+        for sql_file in sql_files:
+            with open(sql_file, "r") as f:
+                results = con.query_sql_file(f)
+                for cur in results:
+                    for row in cur:
+                        print(f"[!] Query Resule ### - {row}")
 
     # utils.set_github_action_output("queries_results", json.dumps(json_results))
 
