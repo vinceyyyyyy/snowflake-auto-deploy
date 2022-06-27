@@ -16,7 +16,7 @@ def main():
     snowflake_password = os.environ["INPUT_SNOWFLAKE_PASSWORD"]
     snowflake_role = os.environ.get("INPUT_SNOWFLAKE_ROLE", "")
 
-    sql_files = query_file_names.split(r"\n")
+    sql_files = query_file_names.split("\n")
 
     with SnowflakeConnector(snowflake_account, snowflake_username, snowflake_password) as con:
         if snowflake_role:
