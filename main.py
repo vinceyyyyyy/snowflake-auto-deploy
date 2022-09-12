@@ -26,6 +26,7 @@ def main():
 
         # default, run all queries async
         for sql_file in sql_files:
+            print(f"Running query file ### - {sql_file}")
             with open(sql_file, "r") as f:
                 results = con.query_sql_file(f)
                 for cur in results:
