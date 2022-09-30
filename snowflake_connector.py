@@ -22,6 +22,12 @@ class SnowflakeConnector:
     def set_db_warehouse(self, warehouse: str):
         return self._query(f"USE WAREHOUSE {warehouse}")
 
+    def set_database(self, database: str):
+        return self._query(f"USE DATABASE {database}")
+
+    def set_schema(self, schema: str):
+        return self._query(f"USE SCHEMA {schema}")
+
     def set_user_role(self, role: str):
         return self._query(f"USE ROLE {role}")
 
